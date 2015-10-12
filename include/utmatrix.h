@@ -103,7 +103,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
     if ( v == nullptr )
         return false;
 
-    if ( Size != v.GetSize() || StartIndex != v.GetStartIndex() )
+    if ( Size-StartIndex != v.GetStartIndex() - v.GetSize() )
         return false;
 
     for ( int i = StartIndex; i < Size; i++){
@@ -174,6 +174,20 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
+    if ( v == nullptr )
+        throw( "Invalid assigned object" );
+
+    int bS = Size;
+    int bSI = StartIndex;
+
+    if ( v.GetSize() > Size )
+        bS = v.GetSize();
+    if ( v.GetStartIndex() > StartIndex )
+        bSI = v.GetStartIndex();
+
+    TVector<ValType> buf( bS, bSI );
+
+    for ( int i = buf)
 }
 
 template <class ValType> // вычитание
