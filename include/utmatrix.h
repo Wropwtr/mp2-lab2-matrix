@@ -74,7 +74,6 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
     StartIndex = v.GetStartIndex();
     pVector = new ValType[Size];
 
-
     if ( pVector != null ){
         for ( int i = 0; i < Size; i++){
             pVector[i] = v.pVector[i];
@@ -145,17 +144,32 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
-} /*-------------------------------------------------------------------------*/
+    TVector<ValType> buf(*this);
+    for ( int i = 0; i < Size; i++){
+        buf.pVector[i] += val;
+    }
+    return buf;
+}
 
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-} /*-------------------------------------------------------------------------*/
+    TVector<ValType> buf(*this);
+    for ( int i = 0; i < Size; i++){
+        buf.pVector[i] -= val;
+    }
+    return buf;
+}
 
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
-} /*-------------------------------------------------------------------------*/
+    TVector<ValType> buf(*this);
+    for ( int i = 0; i < Size; i++){
+        buf.pVector[i] *= val;
+    }
+    return buf;
+}
 
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
