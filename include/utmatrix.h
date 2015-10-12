@@ -65,7 +65,6 @@ TVector<ValType>::TVector(int s, int si)
     Size = s;
     StartIndex = si;
     pVector = new ValType[Size];
-
 }
 
 template <class ValType> //конструктор копирования
@@ -92,22 +91,56 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-} /*-------------------------------------------------------------------------*/
+    if ( pos >= Size || pos < 0){
+        throw("Index out of bounds.");
+    }
+
+    return pVector[pos];
+}
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
-} /*-------------------------------------------------------------------------*/
+    if ( v == nullptr )
+        return false;
+
+    if ( Size != v.GetSize() || StartIndex != v.GetStartIndex() )
+        return false;
+
+    for ( int i = 0; i < Size; i++){
+        if ( v.pVector[i] != pVector[i] )
+            return false;
+    }
+
+    return true;
+} // Уточнить, как сравнивать
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
-} /*-------------------------------------------------------------------------*/
+    return ( !(*this == v) );
+}
 
 template <class ValType> // присваивание
 TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
-} /*-------------------------------------------------------------------------*/
+    if ( v == nullptr )
+        throw( "Invalid assigned object" );
+
+    delete []pVector;
+    Size = v.GetSize();
+    StartIndex = v.GetStartIndex();
+
+    pVector = new ValType[Size];
+
+    if ( pVector != null ){
+        for ( int i = 0; i < Size; i++){
+            pVector[i] = v.pVector[i];
+        }
+    }
+
+    return *this;
+}
 
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
