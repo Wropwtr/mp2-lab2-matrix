@@ -75,7 +75,7 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
     pVector = new ValType[Size];
 
     if ( pVector != null ){
-        for ( int i = 0; i < Size; i++){
+        for ( int i = StartIndex; i < Size; i++){
             pVector[i] = v.pVector[i];
         }
     }
@@ -106,7 +106,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
     if ( Size != v.GetSize() || StartIndex != v.GetStartIndex() )
         return false;
 
-    for ( int i = 0; i < Size; i++){
+    for ( int i = StartIndex; i < Size; i++){
         if ( v.pVector[i] != pVector[i] )
             return false;
     }
@@ -133,7 +133,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
     pVector = new ValType[Size];
 
     if ( pVector != null ){
-        for ( int i = 0; i < Size; i++){
+        for ( int i = StartIndex; i < Size; i++){
             pVector[i] = v.pVector[i];
         }
     }
@@ -145,7 +145,7 @@ template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
     TVector<ValType> buf(*this);
-    for ( int i = 0; i < Size; i++){
+    for ( int i = StartIndex; i < Size; i++){
         buf.pVector[i] += val;
     }
     return buf;
@@ -155,7 +155,7 @@ template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
     TVector<ValType> buf(*this);
-    for ( int i = 0; i < Size; i++){
+    for ( int i = StartIndex; i < Size; i++){
         buf.pVector[i] -= val;
     }
     return buf;
@@ -165,7 +165,7 @@ template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
     TVector<ValType> buf(*this);
-    for ( int i = 0; i < Size; i++){
+    for ( int i = StartIndex; i < Size; i++){
         buf.pVector[i] *= val;
     }
     return buf;
@@ -174,7 +174,7 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-} /*-------------------------------------------------------------------------*/
+}
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
