@@ -217,8 +217,8 @@ TEST(TVector, can_add_scalar_to_vector)
 	rez[1] = 5;
 	rez[2] = -5;
 	rez[3] = 5;
-	rez[4] = 6;
-	rez[5] = 5;
+	rez[4] = 5;
+	rez[5] = 6;
 	// 15 5 -5 5 6 5
 
 	EXPECT_EQ(rez, x);
