@@ -66,9 +66,21 @@ TVector<ValType>::TVector(int s, int si)
 		throw( "Not correct vector size" );
 	if ( si < 0 || si >= s)
 		throw( "Not correct start index" );
+
     Size = s;
     StartIndex = si;
-	pVector = new ValType[Size] ;
+
+	ValType *buf = new ValType[Size];
+	if ( buf != 0 ){
+		for (int i = 0; i < Size; i++){
+			buf[i] = 0;
+		}
+	}
+	else{
+		throw( "Can't allocate memory" );
+	}
+
+	pVector = buf ;
 }
 
 template <class ValType> //конструктор копирования
@@ -76,17 +88,20 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 {
     Size = v.Size;
     StartIndex = v.StartIndex;
-    pVector = new ValType[Size];
 
-	
-
-    if ( pVector != 0 ){
-		for ( int i = 0; i < StartIndex; i++){
-			pVector[i] = 0;
+	ValType *buf = new ValType[Size];
+	if ( buf != 0 ){
+		for (int i = 0; i < Size; i++){
+			buf[i] = 0;
 		}
-        for ( int i = StartIndex; i < Size; i++){
-            pVector[i] = v.pVector[i];
-        }
+	}
+	else{
+		throw( "Can't allocate memory" );
+	}
+
+	pVector = buf ;
+    for ( int i = StartIndex; i < Size; i++){
+        pVector[i] = v.pVector[i];
     }
 }
 
@@ -145,15 +160,20 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
     Size = v.Size;
     StartIndex = v.StartIndex;
 
-    pVector = new ValType[Size];
-
-    if ( pVector != 0 ){
-		for (int i = 0; i < StartIndex; i++){
-			pVector[i] = 0;
+    ValType *buf = new ValType[Size];
+	if ( buf != 0 ){
+		for (int i = 0; i < Size; i++){
+			buf[i] = 0;
 		}
-        for ( int i = StartIndex; i < Size; i++){
-            pVector[i] = v.pVector[i];
-        }
+	}
+	else{
+		throw( "Can't allocate memory" );
+	}
+
+	pVector = buf ;
+
+    for ( int i = StartIndex; i < Size; i++){
+        pVector[i] = v.pVector[i];
     }
 
     return *this;
@@ -200,9 +220,6 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 
     TVector<ValType> buf( Size, StartIndex );
 
-	for (int i = 0; i < StartIndex; i++){
-		buf[i] = 0;
-	}
     for ( int i = StartIndex; i < Size; i++){
         buf[i] = pVector[i] + v.pVector[i];
     }
@@ -221,9 +238,6 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 
     TVector<ValType> buf( Size, StartIndex );
 
-	for (int i = 0; i < StartIndex; i++){
-		buf[i] = 0;
-	}
     for ( int i = StartIndex; i < Size; i++){
         buf[i] = pVector[i] - v.pVector[i];
     }
@@ -285,11 +299,9 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s, 0)
 {
 	if ( s > MAX_MATRIX_SIZE || s < 0)
 		throw( "Not correct matrix size");
+
     for ( int i = 0; i < s; i++){
         pVector[i] = TVector<ValType>(s, i);
-		for (int j = 0; j < s; j++){
-			pVector[i][j] = 0;
-		}
     }
 }
 
