@@ -238,8 +238,8 @@ TEST(TVector, can_subtract_scalar_from_vector)
 	rez[1] = -5;
 	rez[2] = -15;
 	rez[3] = -5;
-	rez[4] = -4;
-	rez[5] = -5;
+	rez[4] = -5;
+	rez[5] = -4;
 	// 5 -5 -15 -5 -4 -5
 
 	EXPECT_EQ(rez, x);
