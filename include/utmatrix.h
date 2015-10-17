@@ -150,7 +150,7 @@ bool TVector<ValType>::operator!=(const TVector &v) const
 template <class ValType> // присваивание
 TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
-    if ( v == 0 )
+    if ( &v == 0 )
         throw( "Invalid assigned object" );
 
     if ( this == &v )
