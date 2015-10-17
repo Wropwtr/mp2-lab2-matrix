@@ -358,11 +358,8 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
 	y[2] = -6;
 	// 0 6 -6
 
-	TVector<int> rez(3);
-
-	rez[1] = 18;
-	rez[2] = 18;
-	// 0 18 18
+	int rez = 36;
+	// 3*6 + (-3)*(-6) = 18+18
 
 	EXPECT_EQ(rez, x * y);
 }
