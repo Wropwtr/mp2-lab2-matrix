@@ -115,8 +115,8 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 	v = z;
 
 	TVector<int> rez(4);
-	z[0] = -1;
-	z[2] = -4;
+	rez[0] = -1;
+	rez[2] = -4;
 	// -1 0 -4 0
 
 	EXPECT_EQ(rez, v);
