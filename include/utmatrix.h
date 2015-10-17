@@ -199,10 +199,10 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-	if ( v == nullptr )
+	if ( v == 0 )
         throw( "Invalid assigned object" );
 		
-	if ( Size != v.GetSize()  ||  StartIndex != v.GetStartIndex() )
+	if ( Size != v.Size  ||  StartIndex != v.StartIndex )
         throw( "Objects must be equal size" );
 
     TVector<ValType> buf( Size, StartIndex );
@@ -217,10 +217,10 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
-	if ( v == nullptr )
+	if ( v == 0 )
         throw( "Invalid assigned object" );
 		
-	if ( Size != v.GetSize()  ||  StartIndex != v.GetStartIndex() )
+	if ( Size != v.Size  ||  StartIndex != v.StartIndex )
         throw( "Objects must be equal size" );
 
     ValType result = 0;
@@ -285,10 +285,10 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
     if ( this == &mt )
         return true;
 
-    if ( mt == nullptr )
+    if ( mt == 0 )
         return false;
 
-    if ( Size != mt.GetSize()  ||  StartIndex != mt.GetStartIndex() )
+	if (Size != mt.Size || StartIndex != mt.StartIndex)
         return false;
 
     for ( int i = StartIndex; i < Size; i++){
