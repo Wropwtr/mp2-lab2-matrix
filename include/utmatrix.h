@@ -212,7 +212,7 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-    if ( v == 0 )
+    if ( &v == 0 )
         throw( "Invalid assigned object" );
 		
 	if ( Size != v.Size  ||  StartIndex != v.StartIndex )
@@ -230,7 +230,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-	if ( v == 0 )
+	if ( &v == 0 )
         throw( "Invalid assigned object" );
 		
 	if ( Size != v.Size  ||  StartIndex != v.StartIndex )
@@ -248,7 +248,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
-	if ( v == 0 )
+	if ( &v == 0 )
         throw( "Invalid assigned object" );
 		
 	if ( Size != v.Size  ||  StartIndex != v.StartIndex )
