@@ -62,9 +62,13 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
+	if ( s > MAX_VECTOR_SIZE || s < 0)
+		throw( "Not correct vector size" );
+	if ( si < 0 || si >= s)
+		throw( "Not correct start index" );
     Size = s;
     StartIndex = si;
-    pVector = new ValType[Size];
+	pVector = new ValType[Size] ;
 }
 
 template <class ValType> //конструктор копирования
@@ -74,7 +78,12 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
     StartIndex = v.StartIndex;
     pVector = new ValType[Size];
 
+	
+
     if ( pVector != 0 ){
+		for ( int i = 0; i < StartIndex; i++){
+			pVector[i] = 0;
+		}
         for ( int i = StartIndex; i < Size; i++){
             pVector[i] = v.pVector[i];
         }
@@ -139,6 +148,9 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
     pVector = new ValType[Size];
 
     if ( pVector != 0 ){
+		for (int i = 0; i < StartIndex; i++){
+			pVector[i] = 0;
+		}
         for ( int i = StartIndex; i < Size; i++){
             pVector[i] = v.pVector[i];
         }
@@ -188,13 +200,15 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 
     TVector<ValType> buf( Size, StartIndex );
 
+	for (int i = 0; i < StartIndex; i++){
+		buf[i] = 0;
+	}
     for ( int i = StartIndex; i < Size; i++){
         buf[i] = pVector[i] + v.pVector[i];
     }
 
     return buf;
 }
-// переделать, непонятно устанавливаемым для buf размерами
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
@@ -207,6 +221,9 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 
     TVector<ValType> buf( Size, StartIndex );
 
+	for (int i = 0; i < StartIndex; i++){
+		buf[i] = 0;
+	}
     for ( int i = StartIndex; i < Size; i++){
         buf[i] = pVector[i] - v.pVector[i];
     }
@@ -266,8 +283,13 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s, 0)
 {
+	if ( s > MAX_MATRIX_SIZE || s < 0)
+		throw( "Not correct matrix size");
     for ( int i = 0; i < s; i++){
         pVector[i] = TVector<ValType>(s, i);
+		for (int j = 0; j < s; j++){
+			pVector[i][j] = 0;
+		}
     }
 }
 
