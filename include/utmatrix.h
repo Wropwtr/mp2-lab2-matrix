@@ -334,7 +334,7 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 	if (this == &mt)
 		return true;
 
-	if (mt == 0)
+	if (&mt == 0)
 		return false;
 
 	if (Size != mt.Size || StartIndex != mt.StartIndex)
