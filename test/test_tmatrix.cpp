@@ -163,7 +163,11 @@ TEST(TMatrix, compare_equal_matrices_return_true)
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
-  ADD_FAILURE();
+	TMatrix<int> rez(5);
+	rez[2][2] = -5;
+	rez[3][4] = 14;
+
+	EXPECT_EQ(1, rez == rez);
 }
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
@@ -231,7 +235,7 @@ TEST(TMatrix, cant_add_null_reference)
 	TMatrix<int> a(2);
 	a[1][1] = 3;
 
-	TMatrix<int> b = 0;
+	TMatrix<int> b;
 
 	ASSERT_ANY_THROW(a + b);
 }

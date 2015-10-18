@@ -357,6 +357,9 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
+	if (&mt == 0){
+		throw("Second matrix adress is NULL");
+	}
 	if (this != &mt){
 		if (Size != mt.Size){
 			delete[]pVector;
@@ -374,12 +377,18 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
+	if (&mt == 0){
+		throw("Second matrix adress is NULL");
+	}
 	return TVector<TVector<ValType> >::operator +(mt);
 }
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
+	if (&mt == 0){
+		throw("Second matrix adress is NULL");
+	}
 	return TVector<TVector<ValType> >::operator -(mt);
 }
 
