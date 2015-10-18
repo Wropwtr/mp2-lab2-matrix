@@ -82,7 +82,7 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 
 	pVector = new ValType[Size];
 
-	for (int i = StartIndex; i < Size; i++){
+	for (int i = 0; i < Size; i++){
 		pVector[i] = v.pVector[i];
 	}
 
@@ -154,13 +154,16 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
-	TVector<ValType> buf(*this);
 
+	//TVector<ValType> buf(*this);
+
+	TVector<ValType> buf(Size, StartIndex);
 	for (int i = 0; i < StartIndex; i++){
 		buf.pVector[i] = 0;
 	}
+
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] += val;
+		buf.pVector[i] = pVector[i] + val;
 	}
 	return buf;
 }
@@ -168,13 +171,15 @@ TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-	TVector<ValType> buf(*this);
+	//TVector<ValType> buf(*this);
 
+	TVector<ValType> buf(Size, StartIndex);
 	for (int i = 0; i < StartIndex; i++){
 		buf.pVector[i] = 0;
 	}
+
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] -= val;
+		buf.pVector[i] = pVector[i] - val;
 	}
 	return buf;
 }
@@ -182,13 +187,15 @@ TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
-	TVector<ValType> buf(*this);
+	//TVector<ValType> buf(*this);
+
+	TVector<ValType> buf(Size, StartIndex);
 	for (int i = 0; i < StartIndex; i++){
 		buf.pVector[i] = 0;
 	}
 
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] *= val;
+		buf.pVector[i] = pVector[i] * val;
 	}
 	return buf;
 }
