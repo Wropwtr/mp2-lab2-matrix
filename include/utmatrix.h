@@ -60,7 +60,7 @@ public:
 };
 
 template <class ValType>
-TVector<ValType>::TVector(int s, int si)
+TVector<ValType>::TVector(int s, int si) // конструктор
 {
 	if (s > MAX_VECTOR_SIZE || s < 0)
 		throw("Not correct vector size");
@@ -72,6 +72,11 @@ TVector<ValType>::TVector(int s, int si)
 
 	pVector = new ValType[Size];
 
+	if (!strchr(typeid(ValType).name(), '<')){
+		for (int i = 0; i < Size; i++){
+			pVector[i] = 0;
+		}
+	}
 }
 
 template <class ValType> //конструктор копирования
@@ -82,7 +87,13 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 
 	pVector = new ValType[Size];
 
-	for (int i = 0; i < Size; i++){
+	if (!strchr(typeid(ValType).name(), '<')){
+		for (int i = 0; i < StartIndex; i++){
+			pVector[i] = 0;
+		}
+	}
+
+	for (int i = StartIndex; i < Size; i++){
 		pVector[i] = v.pVector[i];
 	}
 
@@ -122,7 +133,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
 	}
 
 	return true;
-} // Уточнить, как сравнивать
+} 
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
@@ -144,6 +155,13 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 	StartIndex = v.StartIndex;
 
 	pVector = new ValType[Size];
+
+	if (!strchr(typeid(ValType).name(), '<')){
+		for (int i = 0; i < StartIndex; i++){
+			pVector[i] = 0;
+		}
+	}
+
 	for (int i = StartIndex; i < Size; i++){
 		pVector[i] = v.pVector[i];
 	}
@@ -155,48 +173,36 @@ template <class ValType> // прибавить скаляр
 TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
 
-	//TVector<ValType> buf(*this);
-
-	TVector<ValType> buf(Size, StartIndex);
-	for (int i = 0; i < StartIndex; i++){
-		buf.pVector[i] = 0;
-	}
+	TVector<ValType> buf(*this);
 
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] = pVector[i] + val;
+		buf.pVector[i] += val;
 	}
+
 	return buf;
 }
 
 template <class ValType> // вычесть скаляр
 TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
-	//TVector<ValType> buf(*this);
-
-	TVector<ValType> buf(Size, StartIndex);
-	for (int i = 0; i < StartIndex; i++){
-		buf.pVector[i] = 0;
-	}
+	TVector<ValType> buf(*this);
 
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] = pVector[i] - val;
+		buf.pVector[i] -= val;
 	}
+
 	return buf;
 }
 
 template <class ValType> // умножить на скаляр
 TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
-	//TVector<ValType> buf(*this);
-
-	TVector<ValType> buf(Size, StartIndex);
-	for (int i = 0; i < StartIndex; i++){
-		buf.pVector[i] = 0;
-	}
+	TVector<ValType> buf(*this);
 
 	for (int i = StartIndex; i < Size; i++){
-		buf.pVector[i] = pVector[i] * val;
+		buf.pVector[i] *= val;
 	}
+
 	return buf;
 }
 
@@ -211,8 +217,10 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 
 	TVector<ValType> buf(Size, StartIndex);
 
-	for (int i = 0; i < StartIndex; i++){
-		buf.pVector[i] = 0;
+	if (!strchr(typeid(ValType).name(), '<')){
+		for (int i = 0; i < StartIndex; i++){
+			buf.pVector[i] = 0;
+		}
 	}
 
 	for (int i = StartIndex; i < Size; i++){
@@ -232,8 +240,11 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 		throw("Objects must be equal size");
 
 	TVector<ValType> buf(Size, StartIndex);
-	for (int i = 0; i < StartIndex; i++){
-		buf.pVector[i] = 0;
+	
+	if (!strchr(typeid(ValType).name(), '<')){
+		for (int i = 0; i < StartIndex; i++){
+			buf.pVector[i] = 0;
+		}
 	}
 
 	for (int i = StartIndex; i < Size; i++){
