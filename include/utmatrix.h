@@ -47,8 +47,19 @@ public:
 	// ввод-вывод
 	friend istream& operator>>(istream &in, TVector &v)
 	{
-		for (int i = 0; i < v.Size; i++)
-			in >> v.pVector[i];
+		for (int i = 0; i < v.Size; i++){
+
+			cin.exceptions(ios::failbit | ios::badbit);
+			try
+			{
+				in >> v.pVector[i];
+			}
+			catch (exception& e)
+			{
+				throw("Not correct input data");
+			}
+			
+		}
 		return in;
 	}
 	friend ostream& operator<<(ostream &out, const TVector &v)
