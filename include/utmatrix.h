@@ -301,7 +301,7 @@ public:
 	// ввод / вывод
 	friend istream& operator>>(istream &in, TMatrix &mt)
 	{
-		for (int i = 0; i < mt.; i++)
+		for (int i = 0; i < mt.Size; i++)
 			in >> mt.pVector[i];
 		return in;
 	}
