@@ -57,6 +57,8 @@ void my_menu(){
 		cout << "6 - Zero both matrix>" << endl;
 		cout << "7 - Print A>" << endl;
 		cout << "8 - Print B>" << endl;
+        cout << "9 - A == B ?" << endl;
+        cout << "10 - A != B ?" << endl;
 		cout << "0 - EXIT>" << endl;
 		cin >> i;
 		cout << endl;
@@ -67,6 +69,8 @@ void my_menu(){
 				  int sizeA = 0;
 				  cout << "Enter size of matrix\n";
 				  cin >> sizeA;  // try mb
+                  if ( sizeA < 1)
+                      throw("Size can not be negative");
 				  a = TMatrix<Type>(sizeA);
 				  cout << "Enter matrix:\n";
 				  cin >> a;
@@ -75,10 +79,12 @@ void my_menu(){
 		}
 		case 2:
 		{
-				  int sizeA = 0;
+				  int sizeB = 0;
 				  cout << "Enter size of matrix\n";
-				  cin >> sizeA;  // try mb
-				  b = TMatrix<Type>(sizeA);
+				  cin >> sizeB;
+                  if ( sizeB < 1)
+                      throw("Size can not be negative");
+				  b = TMatrix<Type>(sizeB);
 				  cout << "Enter matrix:\n";
 				  cin >> b;
 
@@ -123,6 +129,26 @@ void my_menu(){
 				  cout << b;
 				  break;
 		}
+        case 9:
+        {
+            if ( a == b){
+                cout << "true"<<endl;
+            }
+            else{
+                cout <<" false"<< endl;
+            }
+            break;
+        }
+        case 10:
+        {
+            if ( a != b){
+                cout << "true"<<endl;
+            }
+            else{
+                cout <<" false"<< endl;
+            }
+            break;
+        }
 		case 0:
 			return;
 		default:
