@@ -64,7 +64,9 @@ public:
 	}
 	friend ostream& operator<<(ostream &out, const TVector &v)
 	{
-		for (int i = 0; i < v.Size; i++)
+        for (int i = 0; i < v.StartIndex; i++)
+			out << "0 ";
+		for (int i = v.StartIndex; i < v.Size; i++)
 			out << v.pVector[i] << ' ';
 		return out;
 	}
@@ -83,11 +85,6 @@ TVector<ValType>::TVector(int s, int si) // конструктор
 
 	pVector = new ValType[Size];
 
-	if (!strchr(typeid(ValType).name(), '<')){
-		for (int i = 0; i < Size; i++){
-			pVector[i] = 0;
-		}
-	}
 }
 
 template <class ValType> //конструктор копирования
@@ -97,12 +94,6 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 	StartIndex = v.StartIndex;
 
 	pVector = new ValType[Size];
-
-	if (!strchr(typeid(ValType).name(), '<')){
-		for (int i = 0; i < StartIndex; i++){
-			pVector[i] = 0;
-		}
-	}
 
 	for (int i = StartIndex; i < Size; i++){
 		pVector[i] = v.pVector[i];
@@ -167,12 +158,6 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 
 	pVector = new ValType[Size];
 
-	if (!strchr(typeid(ValType).name(), '<')){
-		for (int i = 0; i < StartIndex; i++){
-			pVector[i] = 0;
-		}
-	}
-
 	for (int i = StartIndex; i < Size; i++){
 		pVector[i] = v.pVector[i];
 	}
@@ -228,12 +213,6 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 
 	TVector<ValType> buf(Size, StartIndex);
 
-	if (!strchr(typeid(ValType).name(), '<')){
-		for (int i = 0; i < StartIndex; i++){
-			buf.pVector[i] = 0;
-		}
-	}
-
 	for (int i = StartIndex; i < Size; i++){
 		buf[i] = pVector[i] + v.pVector[i];
 	}
@@ -252,12 +231,6 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 
 	TVector<ValType> buf(Size, StartIndex);
 	
-	if (!strchr(typeid(ValType).name(), '<')){
-		for (int i = 0; i < StartIndex; i++){
-			buf.pVector[i] = 0;
-		}
-	}
-
 	for (int i = StartIndex; i < Size; i++){
 		buf[i] = pVector[i] - v.pVector[i];
 	}
@@ -323,7 +296,7 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 	for (int i = 0; i < s; i++){
 		pVector[i] = TVector<ValType>(s, i);
 	}
-
+    // !!!! correct
 	for (int i = 0; i < s; i++){
 		for (int j = 0; j < s; j++){
 			pVector[i][j] = 0;
